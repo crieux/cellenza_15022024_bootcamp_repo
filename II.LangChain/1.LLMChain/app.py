@@ -64,3 +64,4 @@ chain = LLMChain(
 )
 
 print(chain.invoke({"question": "qui suis-je ?"})["text"])
+print(chain.invoke({"question": "quels sont nos précédents messages ?"})["text"])

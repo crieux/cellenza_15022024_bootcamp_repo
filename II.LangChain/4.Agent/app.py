@@ -45,7 +45,7 @@ def pi_f(input):
     """
     returns the nth decimal of the number pi
     """
-    return str(math.pi).split(".")[1][int(input) + 1]
+    return str(math.pi).split(".")[1][int(input) -1]
 
 def celcius_to_farenheit_f(input):
     """
@@ -64,25 +64,21 @@ tools = [
         func = fibonacci_f,
         name = "fibonacci",
         description = "returns the nth number of the fibonnaci suite",
-        return_direct = True,
     ),
     Tool.from_function(
         func = pi_f,
         name = "pi",
         description = "returns the nth decimal of the number pi",
-        return_direct = True,
     ),
     Tool.from_function(
         func = celcius_to_farenheit_f,
         name = "celcius_to_farenheit",
         description = "convert a value of temperature in celcius to farenheit",
-        return_direct = True,
     ),
     Tool.from_function(
         func = farenheit_to_celcius_f,
         name = "farenheit_to_celcius",
         description = "convert a value of temperature in farenheit to celcius",
-        return_direct = True,
     ),
 ]
 
@@ -104,6 +100,7 @@ agent_executor.invoke({"input": "Quelle est la 13eme décimale de Pi ?"})
 agent_executor.invoke({"input": "Combien font 36,6°C en °F ?"})
 agent_executor.invoke({"input": "Quelle valeur de °F correspond a 36,6° C ?"})
 agent_executor.invoke({"input": "Combien font 1 000 000°F en °C ?"})
+agent_executor.invoke({"input": "Combien fait la 4eme décimale de pi, transforme la en °F ?"})
 
 ################################################################################################
 # Pour aller plus loin
@@ -124,7 +121,7 @@ You might know the answer without running any code, but you should still run the
 If it does not seem like you can write code to answer the question, just return "I don't know" as the answer.
 """
 base_prompt = hub.pull("langchain-ai/openai-functions-template")
-prompt = base_prompt.partial(instructions=instructions)
+prompt = base_prompt.partial(instructions = instructions)
 
 agent = create_openai_functions_agent(
     llm = llm,

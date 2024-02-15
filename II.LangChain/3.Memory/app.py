@@ -49,3 +49,6 @@ chain = LLMChain(
 )
 print(chain.invoke({"question": "Quelle est la couleur du cheval d'Henry IV ?"})["text"])
 print(chain.invoke({"question": "Quel est l'historique de tous nos messages ?"})["text"])
+
+print(chain.invoke({"question": "blabla ?"})["text"])
+print(chain.invoke({"question": "Quel est l'historique de tous nos messages ?"})["text"])

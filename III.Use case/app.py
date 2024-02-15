@@ -126,8 +126,8 @@ def retrieval_augmented_generation(human_query):
 
 import streamlit as st
 
-import warnings
-warnings.filterwarnings("ignore", category=DeprecationWarning) 
+#import warnings
+#warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
 st.title("🦜🔗 RAG use case with Wikipedia")
 st.header("Interact with Wikipedia through ChatGPT")

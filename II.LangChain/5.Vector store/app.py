@@ -55,7 +55,7 @@ chain = load_qa_chain(
 )
 
 # Question 1
-query = "What the topic of the document ?"
+query = "What's the topic of the document ?"
 docs = db.similarity_search(
     query,
     top = 5

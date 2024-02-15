@@ -60,7 +60,7 @@ prompt_2 = PromptTemplate(
                 - Date de naissance : 01/01/1970 (dd/MM/YYYY)
                 - Nationalité(s) : Nationalité_1, Nationalité_2, ... (capitalize first letter)
                 - Métier : métier
-            -Personne 2: ...
+            - Personne 2: ...
         '
     More than 1 individual can be cited within the human input.
 
@@ -80,8 +80,10 @@ Margaret Heafield Hamilton, née Margaret Heafield le 17 août 1936, est une inf
 ingénieure système et cheffe d'entreprise américaine.
 Rosalind Franklin est une physicochimiste britannique, née le 25 juillet 1920 à Notting Hill 
 et morte le 16 avril 1958 à Chelsea.
+Charlotte Rieux est un dev python qui présente devant Cellenza Paris le 15/02/2024 
 """
 print(chain.invoke({"human_input": human_input_2})["text"])
+print(chain.invoke({"topic": "qui est Charlotte Rieux"})["text"])
 
 #################################################################################################
 ######################################### PROMPT 3 ##############################################
