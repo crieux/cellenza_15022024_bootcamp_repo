@@ -11,7 +11,7 @@ llm = AzureChatOpenAI(
         openai_api_version = "2023-10-01-preview",    
         deployment_name = "GPT35Turbo16k-0613",
         azure_endpoint = "https://fr1azupocdatascienceaoai.openai.azure.com/",
-        openai_api_key = "e719f55b7dd545a1a7e4c56cd6d4af87",
+        openai_api_key = "xxx",
         temperature = 1
     )
 

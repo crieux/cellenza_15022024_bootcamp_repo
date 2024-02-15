@@ -12,14 +12,14 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain_openai import AzureOpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-GOOGLE_API_KEY = "AIzaSyDhWb11HX6Z-VLk3iakL1xVVnYzja1dZ04"
+GOOGLE_API_KEY = "xxx"
 GOOGLE_SEARCH_ENGINE_ID = "1377da92307a64915"
 LLM = AzureChatOpenAI(
     openai_api_type = "azure",
     openai_api_version = "2023-10-01-preview",    
     deployment_name = "GPT35Turbo16k-0613",
     azure_endpoint = "https://fr1azupocdatascienceaoai.openai.azure.com/",
-    openai_api_key = "e719f55b7dd545a1a7e4c56cd6d4af87",
+    openai_api_key = "xxx",
     temperature = 1
 )
 EMBEDDINGS = AzureOpenAIEmbeddings(
@@ -27,7 +27,7 @@ EMBEDDINGS = AzureOpenAIEmbeddings(
     openai_api_version = "2023-10-01-preview",    
     deployment = "TextEmbeddingAda-002", # 120k / min
     azure_endpoint = "https://fr1azupocdatascienceaoai.openai.azure.com/",
-    openai_api_key = "e719f55b7dd545a1a7e4c56cd6d4af87"
+    openai_api_key = "xxx"
 )
 
 def get_web_page_content(search_items):
@@ -74,8 +74,8 @@ def retrieval_augmented_generation(human_query):
     google_search = f"https://www.googleapis.com/customsearch/v1?key={GOOGLE_API_KEY}&cx={GOOGLE_SEARCH_ENGINE_ID}&q={query}&start={1 * 10 + 1}"
     google_search_data = requests.get(google_search).json()
     google_search_items = google_search_data.get("items")
-    url_links, page_contents = get_web_page_content(google_search_items[:2])
-    #print(pages_content)
+    url_links, page_contents = get_web_page_content(google_search_items[:5])
+    #print(page_contents)
 
     # Step 4 : Create vector store from the results
     text_splitter = RecursiveCharacterTextSplitter(
@@ -83,7 +83,7 @@ def retrieval_augmented_generation(human_query):
         chunk_overlap = 100, # overlap in tokens between chunk    
         length_function = len,        
     ) 
-    chunked_document = text_splitter.create_documents(" ".join(page_contents))
+    chunked_document = text_splitter.create_documents(page_contents)
     db = FAISS.from_documents(
         chunked_document, 
         EMBEDDINGS,
@@ -92,6 +92,7 @@ def retrieval_augmented_generation(human_query):
         human_query,
         top = 5
     )
+    #print(docs)
 
     # Step 5 : Generate answer from google research
 
@@ -111,7 +112,7 @@ def retrieval_augmented_generation(human_query):
         prompt = prompt
     )
     ai_answer = chain.invoke({"input_documents": docs, "question": human_query})["output_text"]
-    results = ai_answer + "\nSources : \n    -" + "\n    - ".join([url for url in url_links])
+    results = ai_answer + "\n\nSources : \n\n   - " + "\n   - ".join([url for url in url_links])
     return results
 
 #print(retrieval_augmented_generation("Qui était Ada Lovelace ?"))
@@ -126,8 +127,8 @@ def retrieval_augmented_generation(human_query):
 
 import streamlit as st
 
-#import warnings
-#warnings.filterwarnings("ignore", category=DeprecationWarning) 
+import warnings
+warnings.filterwarnings("ignore", category = UserWarning) 
 
 st.title("🦜🔗 RAG use case with Wikipedia")
 st.header("Interact with Wikipedia through ChatGPT")
